@@ -52,6 +52,12 @@ dependencies {
     implementation(Deps.hiltNavigationCompose)
 
     implementation(Deps.ktorAndroid)
+    implementation(Deps.ktorCore)
+    implementation(Deps.ktorSerialization)
+    implementation(Deps.ktorSerializationJson)
+    implementation(Deps.sqlDelightRuntime)
+    implementation(Deps.sqlDelightCoroutinesExtensions)
+    implementation(Deps.kotlinDateTime)
 
     androidTestImplementation(Deps.testRunner)
     androidTestImplementation(Deps.jUnit)

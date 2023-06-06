@@ -1,4 +1,7 @@
 package com.plcoding.translator_kmm.data.translate.remote
 
-class HttpClientFactory {
+import io.ktor.client.HttpClient
+
+expect class HttpClientFactory {
+    fun creator(): HttpClient
 }

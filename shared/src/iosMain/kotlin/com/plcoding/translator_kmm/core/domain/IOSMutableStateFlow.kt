@@ -1,4 +1,8 @@
 package com.plcoding.translator_kmm.core.domain
 
-class IOSMutableStateFlow {
+import kotlinx.coroutines.flow.MutableStateFlow
+
+class IOSMutableStateFlow<T>(initialMutableStateFlow: T) : CommonMutableStateFlow<T>(
+    MutableStateFlow(initialMutableStateFlow)
+) {
 }

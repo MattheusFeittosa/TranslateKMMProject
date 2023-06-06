@@ -1,4 +1,8 @@
 package com.plcoding.translator_kmm.data.translate
 
-class TranslatedDto {
-}
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class TranslatedDto(
+    val translatedText: String
+)
