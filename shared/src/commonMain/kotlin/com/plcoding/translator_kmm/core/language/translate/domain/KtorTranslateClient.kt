@@ -1,12 +1,12 @@
-package com.plcoding.translator_kmm.core.language.translate
+package com.plcoding.translator_kmm.core.language.translate.domain
 
 import com.plcoding.translator_kmm.NetworkConstants
 import com.plcoding.translator_kmm.core.language.Language
-import com.plcoding.translator_kmm.core.language.translate.data.translate.TranslateClient
-import com.plcoding.translator_kmm.core.language.translate.data.translate.TranslateErro
-import com.plcoding.translator_kmm.core.language.translate.data.translate.TranslateException
+import com.plcoding.translator_kmm.core.language.translate.domain.translate.TranslateClient
+import com.plcoding.translator_kmm.core.language.translate.domain.translate.TranslateErro
+import com.plcoding.translator_kmm.core.language.translate.domain.translate.TranslateException
 import com.plcoding.translator_kmm.translate.TranslateDto
-import com.plcoding.translator_kmm.translate.TranslatedDto
+import com.plcoding.translator_kmm.core.language.translate.data.translate.TranslatedDto
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.post

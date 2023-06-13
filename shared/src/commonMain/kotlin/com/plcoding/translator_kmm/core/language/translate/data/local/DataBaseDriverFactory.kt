@@ -1,4 +1,7 @@
 package com.plcoding.translator_kmm.core.language.translate.data.local
 
-class DataBaseDriverFactory {
+import com.squareup.sqldelight.db.SqlDriver
+
+expect class DataBaseDriverFactory {
+    fun create():SqlDriver
 }

@@ -1,4 +1,5 @@
-package com.plcoding.translator_kmm.core.domain
+package com.plcoding.translator_kmm.core.language.domain.utils
+
 
 import kotlinx.coroutines.flow.Flow
 

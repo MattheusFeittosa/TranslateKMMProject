@@ -1,4 +1,4 @@
-package com.plcoding.translator_kmm.data.translate.remote
+package com.plcoding.translator_kmm.translate.remote
 
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.darwin.Darwin

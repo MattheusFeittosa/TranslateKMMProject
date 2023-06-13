@@ -1,4 +1,4 @@
-package com.plcoding.translator_kmm.domain.language
+package com.plcoding.translator_kmm.core.language
 
 enum class Language(
     val langCode: String,

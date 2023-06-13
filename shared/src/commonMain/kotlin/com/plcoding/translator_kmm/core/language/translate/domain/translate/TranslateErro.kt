@@ -1,4 +1,4 @@
-package com.plcoding.translator_kmm.core.language.translate.data.translate
+package com.plcoding.translator_kmm.core.language.translate.domain.translate
 
 enum class TranslateErro() {
     SERVICE_UNAVAILABLE,

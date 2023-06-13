@@ -1,4 +1,11 @@
-package com.plcoding.translator_kmm.core.language.domain.utils.translate.data.local
+package com.plcoding.translator_kmm.core.language.translate.data.local
 
-class DataBaseDriverFactory {
+import com.plcoding.translator_kmm.database.TranslateDatabase
+import com.squareup.sqldelight.db.SqlDriver
+import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
+
+actual class DataBaseDriverFactory {
+    actual fun create(): SqlDriver {
+        return NativeSqliteDriver(TranslateDatabase.Schema, "translate.db")
+    }
 }

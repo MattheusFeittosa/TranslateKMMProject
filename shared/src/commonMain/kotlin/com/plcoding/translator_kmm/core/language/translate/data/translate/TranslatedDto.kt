@@ -1,4 +1,4 @@
-package com.plcoding.translator_kmm.translate
+package com.plcoding.translator_kmm.core.language.translate.data.translate
 
 import kotlinx.serialization.Serializable
 
