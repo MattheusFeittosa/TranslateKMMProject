@@ -15,15 +15,15 @@ class Translate(
     suspend fun execute(
         fromLanguage: Language,
         toLanguage: Language,
-        text: String
+        fromText: String
     ): Resources<String> {
         return try {
-            val result = client.translate(fromLanguage, text, toLanguage)
+            val result = client.translate(fromLanguage, fromText, toLanguage)
             historyDataSource.insertHistoryItem(
                 HistoryItem(
                     id = null,
                     fromLanguageCode = fromLanguage.langCode,
-                    fromText = text,
+                    fromText = fromText,
                     toLanguageCode = toLanguage.langCode,
                     toText = result
                 )

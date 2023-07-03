@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.plcoding.translator_kmm.core.language.translate.data.history.Translate
 import com.plcoding.translator_kmm.core.language.translate.domain.history.HistoryDataSource
 import com.plcoding.translator_kmm.core.language.translate.presentation.TranslateEvent
-import com.plcoding.translator_kmm.core.language.translate.presentation.viewModel.TranslatedViewModel
+import com.plcoding.translator_kmm.core.language.translate.presentation.viewModel.TranslateViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -16,7 +16,7 @@ class AndroidViewModelTranslate @Inject constructor(
 ) : ViewModel() {
 
     private val viewModel by lazy {
-        TranslatedViewModel(
+        TranslateViewModel(
             translate = translate,
             historyDataSource = historyDataSource,
             coroutineScope = viewModelScope

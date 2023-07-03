@@ -4,6 +4,7 @@ import com.plcoding.translator_kmm.core.language.domain.utils.Resources
 import com.plcoding.translator_kmm.core.language.domain.utils.toCommonStateFlow
 import com.plcoding.translator_kmm.core.language.translate.data.history.Translate
 import com.plcoding.translator_kmm.core.language.translate.domain.history.HistoryDataSource
+import com.plcoding.translator_kmm.core.language.translate.domain.history.HistoryItem
 import com.plcoding.translator_kmm.core.language.translate.domain.translate.TranslateException
 import com.plcoding.translator_kmm.core.language.translate.presentation.TranslateEvent
 import com.plcoding.translator_kmm.core.language.translate.presentation.TranslateState
@@ -12,38 +13,38 @@ import com.plcoding.translator_kmm.core.language.translate.presentation.UiLangua
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.flow.updateAndGet
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
-class TranslatedViewModel(
+class TranslateViewModel(
     private val translate: Translate,
     private val historyDataSource: HistoryDataSource,
     private val coroutineScope: CoroutineScope?
 ) {
-    private val viewModeScope = coroutineScope ?: CoroutineScope(Dispatchers.Main)
+
+    private val viewModelScope = coroutineScope ?: CoroutineScope(Dispatchers.Main)
+
     private val _state = MutableStateFlow(TranslateState())
     val state = combine(
         _state,
         historyDataSource.getHistory()
     ) { state, history ->
         if (state.history != history) {
-            state.copy(history = history.mapNotNull { item ->
-                UiHistory(
-                    id = item.id ?: return@mapNotNull null,
-                    fromText = item.fromText,
-                    toText = item.toText,
-                    fromLanguage = UiLanguage.byCode(item.fromLanguageCode),
-                    toLanguage = UiLanguage.byCode(item.toLanguageCode)
-                )
-            })
+            state.copy(
+                history = history.mapNotNull { item ->
+                    UiHistory(
+                        id = item.id ?: return@mapNotNull null,
+                        fromText = item.fromText,
+                        toText = item.toText,
+                        fromLanguage = UiLanguage.byCode(item.fromLanguageCode),
+                        toLanguage = UiLanguage.byCode(item.toLanguageCode)
+                    )
+                }
+            )
         } else state
-    }.stateIn(viewModeScope, SharingStarted.WhileSubscribed(5000), TranslateState())
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), TranslateState())
         .toCommonStateFlow()
+
     private var translateJob: Job? = null
 
     fun onEvent(event: TranslateEvent) {
@@ -168,7 +169,8 @@ class TranslatedViewModel(
         if (state.isTranslating || state.fromText.isBlank()) {
             return
         }
-        viewModeScope.launch {
+
+        translateJob = viewModelScope.launch {
             _state.update {
                 it.copy(
                     isTranslating = true
@@ -176,8 +178,8 @@ class TranslatedViewModel(
             }
             val result = translate.execute(
                 fromLanguage = state.fromLanguage.language,
-                toLanguage = state.toLanguage.language,
-                text = state.toText!!
+                fromText = state.fromText,
+                toLanguage = state.toLanguage.language
             )
             when (result) {
                 is Resources.Success -> {

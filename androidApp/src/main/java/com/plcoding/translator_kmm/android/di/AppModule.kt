@@ -14,7 +14,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import io.ktor.client.HttpClient
+import io.ktor.client.*
 import javax.inject.Singleton
 
 @Module
@@ -23,19 +23,19 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providerHttpClient(): HttpClient {
+    fun provideHttpClient(): HttpClient {
         return HttpClientFactory().creator()
     }
 
     @Provides
     @Singleton
-    fun providerTranslateClient(httpClient: HttpClient): TranslateClient {
+    fun provideTranslateClient(httpClient: HttpClient): TranslateClient {
         return KtorTranslateClient(httpClient)
     }
 
     @Provides
     @Singleton
-    fun providerDatabaseDriverFactory(app: Application): SqlDriver {
+    fun provideDatabaseDriver(app: Application): SqlDriver {
         return DataBaseDriverFactory(app).create()
     }
 
@@ -47,7 +47,10 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideTranslateUseCase(client: TranslateClient, datasource: HistoryDataSource): Translate {
-        return Translate(client, datasource)
+    fun provideTranslateUseCase(
+        client: TranslateClient,
+        dataSource: HistoryDataSource
+    ): Translate {
+        return Translate(client, dataSource)
     }
 }

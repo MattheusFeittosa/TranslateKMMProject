@@ -11,28 +11,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.plcoding.translator_kmm.Greeting
 import com.plcoding.translator_kmm.android.core.presentation.AndroidColorsAndThemes
 import com.plcoding.translator_kmm.android.core.presentation.Routes
 import com.plcoding.translator_kmm.android.core.presentation.TranslateScreen
 import com.plcoding.translator_kmm.android.translate.presentation.AndroidViewModelTranslate
-import dagger.hilt.EntryPoint
 import dagger.hilt.android.AndroidEntryPoint
 
 @Composable
-fun MyApplicationTheme(
+fun TranslatorTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
@@ -53,23 +49,20 @@ fun MyApplicationTheme(
         Font(
             resId = R.font.sf_pro_text_bold,
             weight = FontWeight.Bold
-        )
+        ),
     )
     val typography = Typography(
-        h1 =
-        TextStyle(
+        h1 = TextStyle(
             fontFamily = SfProText,
             fontWeight = FontWeight.Bold,
             fontSize = 30.sp
         ),
-        h2 =
-        TextStyle(
+        h2 = TextStyle(
             fontFamily = SfProText,
             fontWeight = FontWeight.Bold,
             fontSize = 24.sp
         ),
-        h3 =
-        TextStyle(
+        h3 = TextStyle(
             fontFamily = SfProText,
             fontWeight = FontWeight.Medium,
             fontSize = 18.sp
@@ -83,7 +76,7 @@ fun MyApplicationTheme(
             fontFamily = SfProText,
             fontWeight = FontWeight.Normal,
             fontSize = 12.sp
-        )
+        ),
     )
     val shapes = Shapes(
         small = RoundedCornerShape(4.dp),
@@ -98,12 +91,13 @@ fun MyApplicationTheme(
         content = content
     )
 }
+
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MyApplicationTheme {
+            TranslatorTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
@@ -118,26 +112,17 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun TranslateRoot() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Routes.TRANSLATE) {
-
+    NavHost(
+        navController = navController,
+        startDestination = Routes.TRANSLATE
+    ) {
         composable(route = Routes.TRANSLATE) {
             val viewModel = hiltViewModel<AndroidViewModelTranslate>()
             val state by viewModel.state.collectAsState()
-            TranslateScreen(state = state, onEvent = viewModel::onEvent)
+            TranslateScreen(
+                state = state,
+                onEvent = viewModel::onEvent
+            )
         }
-
-    }
-}
-
-@Composable
-fun Greeting(text: String) {
-    Text(text = text)
-}
-
-@Preview
-@Composable
-fun DefaultPreview() {
-    MyApplicationTheme {
-        Greeting("Hello, Android!")
     }
 }

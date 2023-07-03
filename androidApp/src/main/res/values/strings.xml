@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="enter_text_to_translate">Enter a text to translate</string>
+    <string name="copy">Copy\n</string>
+    <string name="play_loud">Play Loud\n</string>
+    <string name="copy_to_clipboard">Text copied to clipboard</string>
+    <string name="translate">Translate\n</string>
+</resources>

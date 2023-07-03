@@ -1,11 +1,10 @@
-package com.plcoding.translator_kmm.translate
+package com.plcoding.translator_kmm.core.language.translate.data.translate
 
 import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 
-@Serializable
+@kotlinx.serialization.Serializable
 data class TranslateDto(
-    @SerialName("textToTranslate") val textToTranslate: String,
-    @SerialName("sourceLanguage") val sourceLanguageCode: String,
-    @SerialName("targetLanguage") val targetLanguageCode: String
+    @SerialName("q") val textToTranslate: String,
+    @SerialName("source") val sourceLanguageCode: String,
+    @SerialName("target") val targetLanguageCode: String
 )
